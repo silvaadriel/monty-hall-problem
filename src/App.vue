@@ -3,28 +3,55 @@
     <base-card class="header-card">
       <h1>Monty Hall Problem</h1>
     </base-card>
-    <base-card class="form-card">
+    <base-card class="form-card" v-if="!isStarted">
       <div>
-        <label for="doors-amount">How many doors do you want?</label>
-        <input type="number" id="doors-amount" value="3" max="100">
+        <base-input-field
+          v-model.number="numberOfDoors"
+          type="number"
+          placeholder="How many doors do you want?"
+        />
       </div>
       <div>
-        <label for="selected-door">Which door has the gift?</label>
-        <input type="number" id="selected-door" value="0" max="100">
+        <base-input-field
+          v-model.number="doorWithGiftBox"
+          type="number"
+          placeholder="Which door has the gift?"
+        />
       </div>
-      <button>Start</button>
+      <base-button
+        @click="isStarted = true"
+        @keyup="isStarted = true"
+      >
+        Start
+      </base-button>
     </base-card>
+    <div class="doors" v-if="isStarted">
+      <div v-for="door in numberOfDoors" :key="door">
+        <base-door :doorNumber="door" :hasGiftBox="door === doorWithGiftBox" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import BaseCard from './components/BaseCard.vue';
+import BaseDoor from './components/BaseDoor.vue';
+import BaseInputField from './components/BaseInputField.vue';
+import BaseButton from './components/BaseButton.vue';
 
 export default {
   name: 'app',
   components: {
     BaseCard,
+    BaseDoor,
+    BaseInputField,
+    BaseButton,
   },
+  data: () => ({
+    isStarted: false,
+    numberOfDoors: null,
+    doorWithGiftBox: null,
+  }),
 };
 </script>
 
@@ -48,17 +75,29 @@ body {
 }
 
 .header-card {
+  text-align: center;
   margin: 20px 0 60px 0;
+  min-width: 560px;
+  width: 50%;
 }
 
 .form-card {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
+  min-width: 560px;
+  width: 50%;
 
-  &, input, button {
+  &, div, input, button {
     margin-bottom: 10px;
     font-size: 2rem;
   }
+}
+
+.doors {
+  align-self: stretch;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
 </style>

@@ -1,4 +1,4 @@
-# monty-hall-problem
+# Monty Hall Problem
 
 ## Project setup
 ```

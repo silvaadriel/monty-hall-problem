@@ -1,5 +1,7 @@
 # Monty Hall Problem
 
+Preview: https://silvaadriel.github.io/monty-hall-problem/
+
 ## Project setup
 ```
 yarn install
